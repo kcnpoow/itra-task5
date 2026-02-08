@@ -8,7 +8,7 @@ export const SongGrid = ({ data }: Props) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-between gap-8">
       {data.map((song) => (
-        <SongCard song={song} />
+        <SongCard key={song.id} song={song} />
       ))}
     </div>
   );
