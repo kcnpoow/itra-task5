@@ -1,9 +1,17 @@
 import { FloatingLabelSelect } from "@/shared/ui/floating-label-select";
+import clsx from "clsx";
 
-export const LanguageSelect = () => {
+interface Props {
+  className?: string;
+}
+
+export const LanguageSelect = ({ className }: Props) => {
   return (
-    <FloatingLabelSelect className="max-w-xs" label="Language">
-      <FloatingLabelSelect.Trigger >
+    <FloatingLabelSelect
+      className={clsx("max-w-xs", className)}
+      label="Language"
+    >
+      <FloatingLabelSelect.Trigger>
         <FloatingLabelSelect.Value />
       </FloatingLabelSelect.Trigger>
 

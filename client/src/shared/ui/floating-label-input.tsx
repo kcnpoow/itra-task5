@@ -31,7 +31,7 @@ export const FloatingLabelInput = ({
 
       <Label
         htmlFor={id}
-        className="absolute left-3 top-1 translate-y-2.5 text-muted-foreground text-base font-semibold transition-all pointer-events-none peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-sm peer-focus:translate-y-0 peer-focus:text-sm"
+        className="absolute left-3 top-1 translate-y-3 text-muted-foreground text-base font-semibold transition-all pointer-events-none peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-sm peer-focus:translate-y-0 peer-focus:text-sm"
       >
         {label}
       </Label>

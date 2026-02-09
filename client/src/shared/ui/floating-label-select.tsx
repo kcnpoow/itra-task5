@@ -50,7 +50,7 @@ const Root = ({
         <Label
           className={clsx(
             "absolute top-1 left-3 text-muted-foreground font-semibold transition-all pointer-events-none",
-            isFloating ? "text-sm" : "text-base translate-y-2.5",
+            isFloating ? "text-sm" : "text-base translate-y-3",
           )}
         >
           {label}

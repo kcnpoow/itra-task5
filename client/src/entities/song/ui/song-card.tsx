@@ -8,6 +8,8 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/shared/shadcn/components/ui/dialog";
 
@@ -32,7 +34,11 @@ export const SongCard = ({ song }: Props) => {
         </Card>
       </DialogTrigger>
 
-      <DialogContent>content</DialogContent>
+      <DialogContent aria-describedby={undefined}>
+        <DialogHeader>
+          <DialogTitle>{song.title}</DialogTitle>
+        </DialogHeader>
+      </DialogContent>
     </Dialog>
   );
 };
