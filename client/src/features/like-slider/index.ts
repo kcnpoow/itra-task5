@@ -1,1 +1,1 @@
-export { LikesSlider } from "./ui";
+export { LikeSlider as LikesSlider } from "./ui";

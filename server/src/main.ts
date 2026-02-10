@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 
+import { songController } from "./controllers/song.controller";
 import { errorMiddleware } from "./middlewares/error.middleware";
 
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use("/songs", songController.getSongs);
 app.use(errorMiddleware);
 
 app.listen(PORT, (error?: Error) => {

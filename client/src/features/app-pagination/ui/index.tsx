@@ -6,14 +6,14 @@ import { ButtonGroup } from "@/shared/shadcn/components/ui/button-group";
 
 interface Props {
   className?: string;
-  nextCursor: string | null;
-  prevCursor: string | null;
+  page: number;
+  onPrev: () => void;
+  onNext: () => void;
 }
 
-export const AppPagination = ({ className, nextCursor, prevCursor }: Props) => {
-  const handlePrevClick = () => {};
-
-  const handleNextClick = () => {};
+export const AppPagination = ({ className, page, onPrev, onNext }: Props) => {
+  const prevPage = page - 1;
+  const nextPage = page + 1;
 
   return (
     <ButtonGroup
@@ -22,22 +22,45 @@ export const AppPagination = ({ className, nextCursor, prevCursor }: Props) => {
         className,
       )}
     >
+      {prevPage > 0 && (
+        <>
+          <Button
+            className="text-primary hover:text-primary"
+            variant="ghost"
+            onClick={onPrev}
+          >
+            <ChevronsLeftIcon />
+          </Button>
+
+          <Button
+            className="text-primary hover:text-primary"
+            variant="ghost"
+            onClick={onPrev}
+          >
+            {prevPage}
+          </Button>
+        </>
+      )}
+
       <Button
-        className="text-primary hover:text-primary"
-        variant="ghost"
-        disabled={!prevCursor}
-        onClick={handlePrevClick}
+        className="transition-none transition-colors disabled:opacity-100"
+        disabled
       >
-        <ChevronsLeftIcon />
+        {page}
       </Button>
 
-      <Button disabled>1</Button>
+      <Button
+        className="text-primary hover:text-primary"
+        variant="ghost"
+        onClick={onNext}
+      >
+        {nextPage}
+      </Button>
 
       <Button
         className="text-primary hover:text-primary"
         variant="ghost"
-        disabled={!nextCursor}
-        onClick={handleNextClick}
+        onClick={onNext}
       >
         <ChevronsRightIcon />
       </Button>

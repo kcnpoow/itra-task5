@@ -1,28 +1,30 @@
-import { pool } from "../config/db";
-import { ApiError } from "../errors/api.error";
 import type { Song } from "../models/song";
+import { ApiError } from "../errors/api.error";
+import { getCombinedSeed } from "../lib/combine-seed";
+import { songMaker } from "../lib/song-maker";
 
 class SongService {
-  getSongs = async (page: number, limit: number): Promise<Song[]> => {
-    if (typeof page !== "number" || typeof limit !== "number") {
-      throw ApiError.BadRequest("Invalid parameters");
+  private cache = new Map();
+
+  getSongs = async (seed: number, page: number): Promise<Song[]> => {
+    if (typeof seed !== "number") {
+      throw ApiError.BadRequest("Invalid seed");
     }
 
-    const offset = (page - 1) * limit;
+    if (typeof page !== "number") {
+      throw ApiError.BadRequest("Invalid page");
+    }
 
-    const result = await pool.query<Song>(
-      `
-      SELECT *
-      FROM songs
-      ORDER BY id DESC
-      LIMIT $1 OFFSET $2
-      `,
-      [limit, offset],
-    );
+    const combinedSeed = getCombinedSeed(seed, page);
 
-    const songs = result.rows;
+    const cachedSongs = this.cache.get(combinedSeed);
+    if (cachedSongs) {
+      return cachedSongs;
+    }
 
-    return songs;
+    await songMaker.createSong(seed, "electronic");
+
+    return [];
   };
 }
 

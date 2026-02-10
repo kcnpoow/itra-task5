@@ -14,13 +14,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/shadcn/components/ui/table";
-import { AppPagination } from "@/features/app-pagination";
-import type { PagedResponse } from "@/shared/types/paged-response";
 
 interface Props {
   data: Song[];
-  onNext: (nextCursor: string) => void;
-  onPrev: (prevCursor: string) => void;
 }
 
 export const SongList = ({ data }: Props) => {
@@ -37,40 +33,36 @@ export const SongList = ({ data }: Props) => {
   });
 
   return (
-    <>
-      <Table className="border">
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
+    <Table className="border">
+      <TableHeader>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <TableRow key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              return (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        ))}
+      </TableHeader>
 
-        <TableBody>
-          {table.getRowModel().rows.map((row) => (
-            <SongRow
-              key={row.id}
-              row={row}
-              open={openSongId === row.id}
-              onOpenChange={handleOpenChange}
-            />
-          ))}
-        </TableBody>
-      </Table>
-
-      <AppPagination className="mt-4" />
-    </>
+      <TableBody>
+        {table.getRowModel().rows.map((row) => (
+          <SongRow
+            key={row.id}
+            row={row}
+            open={openSongId === row.id}
+            onOpenChange={handleOpenChange}
+          />
+        ))}
+      </TableBody>
+    </Table>
   );
 };

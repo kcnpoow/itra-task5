@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 interface Props extends ComponentPropsWithoutRef<typeof Slider> {}
 
-export const LikesSlider = ({ className, ...props }: Props) => {
+export const LikeSlider = ({ className, ...props }: Props) => {
   return (
     <Slider
       className={clsx("max-w-xs", className)}

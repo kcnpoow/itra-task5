@@ -1,14 +1,13 @@
 import type { Song } from "../model";
-import { api } from "@/shared/api";
-import type { PagedResponse } from "@/shared/types/paged-response";
+import { api } from "@/shared/api/base";
 
 class SongApi {
-  private readonly LIMIT = 10;
+  getSongs = async (seed: string, page: number): Promise<Song[]> => {
+    const url = `/songs?seed=${seed}&page=${page}`;
 
-  getPagedSongs = async (cursor: string): Promise<PagedResponse<Song>> => {
-    const url = `/songs?cursor=${cursor}&limit=${this.LIMIT}`;
+    const response = await api.get<Song[]>(url);
 
-    const response = await api.get<PagedResponse<Song>>(url);
+    console.log(response);
 
     return response.data;
   };

@@ -4,27 +4,31 @@ import clsx from "clsx";
 
 import { SongList } from "@/widgets/song-list";
 import { SongGrid } from "@/widgets/song-grid";
-import { LanguageSelect } from "@/features/language";
-import { SeedInput } from "@/features/seed";
+import { LanguageSelect } from "@/features/language-select";
+import { SeedInput } from "@/features/seed-input";
 import { LikesSlider } from "@/features/like-slider";
+import { AppPagination } from "@/features/app-pagination";
 import { songApi, SongViewToggler, type SongViewMode } from "@/entities/song";
 
 export const Home = () => {
+  const [seed, setSeed] = useState("");
+  const [page, setPage] = useState(1);
   const [viewMode, setViewMode] = useState<SongViewMode>("list");
-  const [cursor, setCursor] = useState<string | null>(null);
 
   const { data } = useQuery({
-    queryKey: ["songs", cursor],
-    queryFn: async () => await songApi.getPagedSongs("cursor"),
-    initialData: { items: [], prevCursor: null, nextCursor: null },
+    queryKey: ["songs", seed, page],
+    queryFn: async () => await songApi.getSongs(seed, page),
+    initialData: [],
   });
 
-  const onNext = () => {
-    setCursor(data.nextCursor);
+  const handlePrev = () => {
+    if (page > 0) {
+      setPage((prev) => prev - 1);
+    }
   };
 
-  const onPrev = () => {
-    setCursor(data.prevCursor);
+  const handleNext = () => {
+    setPage((prev) => prev + 1);
   };
 
   return (
@@ -37,7 +41,7 @@ export const Home = () => {
       >
         <LanguageSelect />
 
-        <SeedInput />
+        <SeedInput seed={seed} setSeed={setSeed} />
 
         <LikesSlider />
 
@@ -49,9 +53,18 @@ export const Home = () => {
       </div>
 
       {viewMode === "list" ? (
-        <SongList data={data.items} />
+        <>
+          <SongList data={data} />
+
+          <AppPagination
+            className="mt-4"
+            page={page}
+            onPrev={handlePrev}
+            onNext={handleNext}
+          />
+        </>
       ) : viewMode === "grid" ? (
-        <SongGrid data={data.items} />
+        <SongGrid data={data} />
       ) : null}
     </div>
   );
