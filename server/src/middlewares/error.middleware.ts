@@ -8,14 +8,14 @@ export const errorMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
+  console.error(error);
+
   if (error instanceof ApiError) {
     return res.status(error.status).json({
       message: error.message,
       status: error.status,
     });
   }
-
-  console.error(error);
 
   res.status(500).json({
     message: "Internal server error",

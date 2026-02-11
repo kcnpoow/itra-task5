@@ -2,29 +2,33 @@ import type { Song } from "../models/song";
 import { ApiError } from "../errors/api.error";
 import { getCombinedSeed } from "../lib/combine-seed";
 import { songMaker } from "../lib/song-maker";
+import { PAGE_SIZE } from "../consts/page-size";
+import type { Locale } from "../types/locale";
 
 class SongService {
-  private cache = new Map();
+  getSongs = (locale: Locale, page: number, seed: string): Song[] => {
+    if (!locale) {
+      throw ApiError.BadRequest("Invalid locale");
+    }
 
-  getSongs = async (seed: number, page: number): Promise<Song[]> => {
-    if (typeof seed !== "number") {
+    if (!seed) {
       throw ApiError.BadRequest("Invalid seed");
     }
 
-    if (typeof page !== "number") {
+    if (!page || typeof page !== "number" || isNaN(page)) {
       throw ApiError.BadRequest("Invalid page");
     }
 
-    const combinedSeed = getCombinedSeed(seed, page);
+    const combinedSeed = getCombinedSeed(locale, page, seed);
 
-    const cachedSongs = this.cache.get(combinedSeed);
-    if (cachedSongs) {
-      return cachedSongs;
-    }
+    const songs = songMaker.generateSongs(
+      locale,
+      page,
+      combinedSeed,
+      PAGE_SIZE,
+    );
 
-    await songMaker.createSong(seed, "electronic");
-
-    return [];
+    return songs;
   };
 }
 
