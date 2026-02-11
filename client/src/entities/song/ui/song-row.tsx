@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import type { Song } from "../model";
 import { TableCell, TableRow } from "@/shared/shadcn/components/ui/table";
 import clsx from "clsx";
+import { SongContent } from "./song-content";
 
 interface Props {
   row: Row<Song>;
@@ -46,7 +47,9 @@ export const SongRow = ({ row, open, onOpenChange }: Props) => {
             initial={false}
             animate={{ height: open ? "auto" : 0 }}
           >
-            <div className="h-100 p-2 bg-neutral-100">content</div>
+            <div className="px-12 py-4 bg-neutral-100">
+              <SongContent song={row.original} />
+            </div>
           </motion.div>
         </td>
       </tr>

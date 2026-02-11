@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -31,6 +31,10 @@ export const SongList = ({ data }: Props) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  useEffect(() => {
+    setOpenSongId(null);
+  }, [data]);
 
   return (
     <Table className="border">

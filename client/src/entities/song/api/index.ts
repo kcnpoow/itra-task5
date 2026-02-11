@@ -1,13 +1,16 @@
 import type { Song } from "../model";
 import { api } from "@/shared/api/base";
+import type { Locale } from "@/shared/store/locale-store";
 
 class SongApi {
-  getSongs = async (seed: string, page: number): Promise<Song[]> => {
-    const url = `/songs?seed=${seed}&page=${page}`;
+  getSongs = async (
+    locale: Locale,
+    page: number,
+    seed: string,
+  ): Promise<Song[]> => {
+    const url = `/songs?locale=${locale}&page=${page}&seed=${seed}`;
 
     const response = await api.get<Song[]>(url);
-
-    console.log(response);
 
     return response.data;
   };
