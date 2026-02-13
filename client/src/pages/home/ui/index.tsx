@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { SongList } from "@/widgets/song-list";
@@ -8,12 +8,9 @@ import { ViewModeToggler, type ViewMode } from "@/features/view-mode-toggler";
 import { SeedInput } from "@/features/seed-input";
 import { LikesSlider } from "@/features/like-slider";
 import { useDebounce } from "@/shared/hooks/use-debounce";
-import { useQueryClient } from "@tanstack/react-query";
 
 export const Home = () => {
   const { t, i18n } = useTranslation();
-
-  const queryClient = useQueryClient();
 
   const [locale, setLocale] = useState(localStorage.getItem("locale") || "en");
   const [seed, setSeed] = useState("");
@@ -45,10 +42,6 @@ export const Home = () => {
 
     localStorage.setItem("viewMode", value);
   };
-
-  useEffect(() => {
-    queryClient.removeQueries({ queryKey: ["songs"] });
-  }, [viewMode, queryClient]);
 
   return (
     <div className="container py-4">
