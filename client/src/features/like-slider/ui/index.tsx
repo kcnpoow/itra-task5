@@ -7,7 +7,7 @@ interface Props extends ComponentPropsWithoutRef<typeof Slider> {
   label: string;
 }
 
-export const LikeSlider = ({ className, label, ...props }: Props) => {
+export const LikeSlider = ({ label, ...props }: Props) => {
   const [value, setValue] = useState([0]);
 
   const handleValueChange = (value: number[]) => {

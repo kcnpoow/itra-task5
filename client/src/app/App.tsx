@@ -14,7 +14,7 @@ export const App = () => {
     const locale = localStorage.getItem("locale") ?? "en";
 
     i18n.changeLanguage(locale);
-  }, []);
+  }, [i18n]);
 
   return (
     <QueryClientProvider client={queryClient}>

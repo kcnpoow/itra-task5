@@ -46,11 +46,9 @@ export const Home = () => {
     localStorage.setItem("viewMode", value);
   };
 
-  
-
   useEffect(() => {
     queryClient.removeQueries({ queryKey: ["songs"] });
-  }, [viewMode]);
+  }, [viewMode, queryClient]);
 
   return (
     <div className="container py-4">

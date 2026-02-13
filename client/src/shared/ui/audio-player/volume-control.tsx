@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import {
   Volume1Icon,
   Volume2Icon,
@@ -44,10 +44,6 @@ export const VolumeControl = ({ volume, onVolumeChange }: Props) => {
       onVolumeChange([0]);
     }
   };
-
-  useEffect(() => {
-    setLastVolume(volume);
-  }, []);
 
   return (
     <div

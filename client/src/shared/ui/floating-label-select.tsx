@@ -18,14 +18,11 @@ interface RootProps {
   onValueChange?: (value: string) => void;
 }
 
-interface TriggerProps extends ComponentProps<typeof SelectTrigger> {}
+type TriggerProps = ComponentProps<typeof SelectTrigger>;
 
-interface ContentProps extends ComponentProps<typeof SelectContent> {}
+type ContentProps = ComponentProps<typeof SelectContent>;
 
-interface ValueProps extends Omit<
-  ComponentProps<typeof SelectValue>,
-  "placeholder"
-> {}
+type ValueProps = Omit<ComponentProps<typeof SelectValue>, "placeholder">;
 
 const Root = ({
   className,

@@ -10,6 +10,8 @@ export const InfiniteScroll = ({ onNext }: Props) => {
   const targetRef = useRef(null);
 
   useEffect(() => {
+    const target = targetRef.current;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -19,16 +21,16 @@ export const InfiniteScroll = ({ onNext }: Props) => {
       { threshold: 1.0 },
     );
 
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
+    if (target) {
+      observer.observe(target);
     }
 
     return () => {
-      if (targetRef.current) {
-        observer.unobserve(targetRef.current);
+      if (target) {
+        observer.unobserve(target);
       }
     };
-  }, [targetRef]);
+  }, [targetRef, onNext]);
 
   return (
     <div className="flex justify-center py-12">
