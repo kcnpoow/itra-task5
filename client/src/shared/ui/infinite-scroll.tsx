@@ -18,7 +18,7 @@ export const InfiniteScroll = ({ onNext }: Props) => {
           onNext();
         }
       },
-      { threshold: 1.0 },
+      { rootMargin: "200px" },
     );
 
     if (target) {
