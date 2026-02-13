@@ -20,19 +20,6 @@ export const LikeSlider = ({ label, ...props }: Props) => {
         {label} ({value[0]})
       </Label>
 
-      <div className="flex justify-between mb-3">
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-        <div className="w-px h-0.75 bg-muted-foreground rounded-full"></div>
-      </div>
-
       <Slider
         className="**:data-[slot='slider-range']:bg-transparent"
         step={0.1}
