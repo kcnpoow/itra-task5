@@ -1,7 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 
 import { songApi, SongCard } from "@/entities/song";
 import { InfiniteScroll } from "@/shared/ui/infinite-scroll";
+import { useEffect } from "react";
 
 interface Props {
   locale: string;
@@ -10,10 +11,11 @@ interface Props {
 }
 
 export const SongGrid = ({ locale, seed, likes }: Props) => {
+  const queryClient = useQueryClient();
+
   const { data, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["songs", locale, seed, likes],
+    queryKey: ["songs", "grid", locale, seed, likes],
     initialPageParam: 1,
-    enabled: Boolean(seed),
     queryFn: ({ pageParam }) =>
       songApi.getSongs(locale, pageParam, seed, likes),
     getNextPageParam: (_, allPages) => allPages.length + 1,
@@ -24,6 +26,14 @@ export const SongGrid = ({ locale, seed, likes }: Props) => {
       fetchNextPage();
     }
   };
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({
+        queryKey: ["songs", "grid", locale, seed, likes],
+      });
+    };
+  }, [locale, seed, likes, queryClient]);
 
   return (
     <div>
