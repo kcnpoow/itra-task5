@@ -14,24 +14,12 @@
   "type": "module",
   "dependencies": {
     "@faker-js/faker": "^10.3.0",
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "node-web-audio-api": "^1.0.7",
-    "random": "^5.4.1",
-    "seedrandom": "^3.0.5",
-    "standardized-audio-context": "^25.3.77",
-    "tone": "^15.1.22",
-    "wavefile": "^11.0.0"
+    "express": "^5.2.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.2.0",
     "dotenv": "^17.2.3",
     "nodemon": "^3.1.11",

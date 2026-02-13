@@ -1,80 +1,98 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 import { SongList } from "@/widgets/song-list";
 import { SongGrid } from "@/widgets/song-grid";
 import { LanguageSelect } from "@/features/language-select";
+import { ViewModeToggler, type ViewMode } from "@/features/view-mode-toggler";
 import { SeedInput } from "@/features/seed-input";
 import { LikesSlider } from "@/features/like-slider";
-import { AppPagination } from "@/features/app-pagination";
-import { songApi, SongViewToggler, type SongViewMode } from "@/entities/song";
 import { useDebounce } from "@/shared/hooks/use-debounce";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Home = () => {
-  const [locale, setLocale] = useState("en");
+  const { t, i18n } = useTranslation();
+
+  const queryClient = useQueryClient();
+
+  const [locale, setLocale] = useState(localStorage.getItem("locale") || "en");
   const [seed, setSeed] = useState("");
-  const [page, setPage] = useState(1);
-  const [viewMode, setViewMode] = useState<SongViewMode>("list");
+  const [likes, setLikes] = useState([0]);
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    (localStorage.getItem("viewMode") as ViewMode) || "list",
+  );
 
   const debouncedSeed = useDebounce(seed);
 
-  const { data } = useQuery({
-    queryKey: ["songs", page, debouncedSeed],
-    queryFn: () => songApi.getSongs("ru", page, debouncedSeed),
-    initialData: [],
-    enabled: Boolean(debouncedSeed),
-  });
+  const handleLocaleChange = (value: string) => {
+    setLocale(value);
 
-  const handlePrev = () => {
-    if (page > 1) {
-      setPage((prev) => prev - 1);
-    }
+    i18n.changeLanguage(value);
+
+    localStorage.setItem("locale", value);
   };
 
-  const handleNext = () => {
-    setPage((prev) => prev + 1);
+  const handleSeedChange = (value: string) => {
+    setSeed(value);
   };
+
+  const handleLikesChange = (value: number[]) => {
+    setLikes(value);
+  };
+
+  const handleViewModeChange = (value: ViewMode) => {
+    setViewMode(value);
+
+    localStorage.setItem("viewMode", value);
+  };
+
+  
 
   useEffect(() => {
-    setPage(1);
-  }, [debouncedSeed]);
+    queryClient.removeQueries({ queryKey: ["songs"] });
+  }, [viewMode]);
 
   return (
     <div className="container py-4">
-      <div className="flex items-center gap-4 p-4 bg-neutral-50">
-        <LanguageSelect />
+      <div className="sticky top-0 z-50 flex flex-col md:flex-row items-center gap-4 p-4 bg-neutral-50">
+        <LanguageSelect
+          className="bg-white"
+          label={t("controls.localeLabel")}
+          value={locale}
+          onValueChange={handleLocaleChange}
+        />
 
-        <SeedInput seed={seed} setSeed={setSeed} />
+        <SeedInput
+          className="bg-white"
+          label={t("controls.seedLabel")}
+          value={seed}
+          onValueChange={handleSeedChange}
+        />
 
-        <LikesSlider />
+        <LikesSlider
+          label={t("controls.likesLabel")}
+          onValueCommit={handleLikesChange}
+        />
 
-        <SongViewToggler
-          className="ml-auto"
-          viewMode={viewMode}
-          setViewMode={setViewMode}
+        <ViewModeToggler
+          value={viewMode}
+          onValueChange={handleViewModeChange}
         />
       </div>
 
       {debouncedSeed ? (
         <>
           {viewMode === "list" && (
-            <>
-              <SongList data={data} />
-
-              <AppPagination
-                className="mt-4"
-                page={page}
-                onPrev={handlePrev}
-                onNext={handleNext}
-              />
-            </>
+            <SongList locale={locale} seed={debouncedSeed} likes={likes[0]} />
           )}
 
-          {viewMode === "grid" && <SongGrid data={data} />}
+          {viewMode === "grid" && (
+            <SongGrid locale={locale} seed={debouncedSeed} likes={likes[0]} />
+          )}
         </>
       ) : (
         <div className="flex items-center justify-center w-full h-64">
-          Type seed to see results
+          {t("enterSeedMessage")}
         </div>
       )}
     </div>

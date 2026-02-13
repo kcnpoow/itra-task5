@@ -11,38 +11,35 @@ interface Props extends Omit<
   ComponentPropsWithoutRef<typeof FloatingLabelInput>,
   "onChange"
 > {
-  seed: string;
-  setSeed: (value: string) => void;
+  onValueChange: (value: string) => void;
 }
 
-export const SeedInput = ({ className, seed, setSeed, ...props }: Props) => {
-  const handleSeedChange = (event: ChangeEvent<HTMLInputElement>) => {
+export const SeedInput = ({ className, onValueChange, ...props }: Props) => {
+  const handleGenerateSeed = () => {
+    const seed = generateSeed(SEED_LENGTH).toString();
+
+    onValueChange(seed);
+  };
+
+  const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
     const seed = event.target.value;
 
     if (seed.length > SEED_LENGTH) {
       return;
     }
 
-    setSeed(seed);
-  };
-
-  const handleGenerateSeed = () => {
-    const seed = generateSeed(SEED_LENGTH).toString();
-
-    setSeed(seed);
+    onValueChange(seed);
   };
 
   return (
     <FloatingLabelInput
       className={clsx("max-w-xs", className)}
-      label="Seed"
       addon={
         <Button size="icon-sm" variant="ghost" onClick={handleGenerateSeed}>
           <ShuffleIcon />
         </Button>
       }
-      value={seed}
-      onChange={handleSeedChange}
+      onChange={handleValueChange}
       {...props}
     />
   );

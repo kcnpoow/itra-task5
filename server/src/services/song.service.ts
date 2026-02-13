@@ -1,12 +1,16 @@
 import type { Song } from "../models/song";
 import { ApiError } from "../errors/api.error";
-import { getCombinedSeed } from "../lib/combine-seed";
 import { songMaker } from "../lib/song-maker";
 import { PAGE_SIZE } from "../consts/page-size";
 import type { Locale } from "../types/locale";
 
 class SongService {
-  getSongs = (locale: Locale, page: number, seed: string): Song[] => {
+  getSongs = (
+    locale: Locale,
+    page: number,
+    seed: string,
+    likes: number,
+  ): Song[] => {
     if (!locale) {
       throw ApiError.BadRequest("Invalid locale");
     }
@@ -15,18 +19,15 @@ class SongService {
       throw ApiError.BadRequest("Invalid seed");
     }
 
-    if (!page || typeof page !== "number" || isNaN(page)) {
+    if (typeof page !== "number" || isNaN(page)) {
       throw ApiError.BadRequest("Invalid page");
     }
 
-    const combinedSeed = getCombinedSeed(locale, page, seed);
+    if (typeof likes !== "number" || isNaN(likes)) {
+      throw ApiError.BadRequest("Invalid likes");
+    }
 
-    const songs = songMaker.generateSongs(
-      locale,
-      page,
-      combinedSeed,
-      PAGE_SIZE,
-    );
+    const songs = songMaker.generateSongs(locale, page, seed, likes, PAGE_SIZE);
 
     return songs;
   };

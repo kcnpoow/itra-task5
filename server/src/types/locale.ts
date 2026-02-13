@@ -1,3 +1,1 @@
-import { allLocales } from "@faker-js/faker";
-
-export type Locale = keyof typeof allLocales;
+export type Locale = "ru" | "en";

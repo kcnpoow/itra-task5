@@ -1,0 +1,18 @@
+{
+  "controls": {
+    "localeLabel": "Язык",
+    "seedLabel": "Сид",
+    "likesLabel": "Лайки"
+  },
+  "row": {
+    "titleLabel": "Песня",
+    "artistLabel": "Автор",
+    "albumLabel": "Альбом",
+    "genreLabel": "Жанр"
+  },
+  "enterSeedMessage": "Введите сид, чтобы начать",
+  "locales": {
+    "ru": "Русский",
+    "en": "Английский"
+  }
+}

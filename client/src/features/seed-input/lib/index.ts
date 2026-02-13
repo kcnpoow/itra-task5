@@ -1,8 +1,14 @@
-export const generateSeed = (length: number): number => {
-  const min = 10 ** (length - 1);
-  const max = 10 ** length - 1;
+export const generateSeed = (length: number): string => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  const seed = Math.floor(min + Math.random() * (max - min + 1));
+  let seed = "";
+
+  for (let i = 0; i < length; i++) {
+    const index = Math.floor(Math.random() * characters.length);
+
+    seed += characters[index];
+  }
 
   return seed;
 };

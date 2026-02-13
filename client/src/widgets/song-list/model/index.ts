@@ -1,26 +1,27 @@
 import { type ColumnDef } from "@tanstack/react-table";
+import { type TFunction } from "i18next";
 
 import type { Song } from "@/entities/song";
 
-export const columns: ColumnDef<Song>[] = [
+export const getColumns = (t: TFunction): ColumnDef<Song>[] => [
   {
     accessorKey: "id",
     header: "#",
   },
   {
     accessorKey: "title",
-    header: "Song",
+    header: t("row.titleLabel"),
   },
   {
     accessorKey: "artist",
-    header: "Artist",
+    header: t("row.artistLabel"),
   },
   {
     accessorKey: "album",
-    header: "Album",
+    header: t("row.albumLabel"),
   },
   {
     accessorKey: "genre",
-    header: "Genre",
+    header: t("row.genreLabel"),
   },
 ];

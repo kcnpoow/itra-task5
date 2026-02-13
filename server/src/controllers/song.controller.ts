@@ -8,8 +8,9 @@ class SongController {
       const locale = req.query.locale as Locale;
       const page = Number(req.query.page);
       const seed = req.query.seed as string;
+      const likes = Number(req.query.likes);
 
-      const songs = songService.getSongs(locale, page, seed);
+      const songs = songService.getSongs(locale, page, seed, likes);
 
       return res.status(200).json(songs);
     } catch (error) {

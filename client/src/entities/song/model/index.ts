@@ -1,2 +1,9 @@
-export { type Song } from "./song";
-export { type SongViewMode } from "./song-view-mode";
+export interface Song {
+  id: number;
+  title: string;
+  artist: string;
+  album: string;
+  genre: string;
+  likes: number;
+  coverUrl: string;
+}

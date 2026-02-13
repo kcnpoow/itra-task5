@@ -1,29 +1,40 @@
-import { FloatingLabelSelect } from "@/shared/ui/floating-label-select";
+import { type ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 
-interface Props {
+import { FloatingLabelSelect } from "@/shared/ui/floating-label-select";
+import { useTranslation } from "react-i18next";
+
+interface Props extends Omit<
+  ComponentPropsWithoutRef<typeof FloatingLabelSelect>,
+  "children"
+> {
   className?: string;
 }
 
-export const LanguageSelect = ({ className }: Props) => {
+export const LanguageSelect = ({
+  className,
+  onValueChange,
+  ...props
+}: Props) => {
+  const { t } = useTranslation();
+
   return (
     <FloatingLabelSelect
       className={clsx("max-w-xs", className)}
-      label="Language"
+      onValueChange={onValueChange}
+      {...props}
     >
       <FloatingLabelSelect.Trigger>
         <FloatingLabelSelect.Value />
       </FloatingLabelSelect.Trigger>
 
       <FloatingLabelSelect.Content>
-        <FloatingLabelSelect.SelectGroup>
-          <FloatingLabelSelect.SelectItem value="en">
-            English
-          </FloatingLabelSelect.SelectItem>
-          <FloatingLabelSelect.SelectItem value="es">
-            Russian
-          </FloatingLabelSelect.SelectItem>
-        </FloatingLabelSelect.SelectGroup>
+        <FloatingLabelSelect.SelectItem value="en">
+          {t("locales.en")}
+        </FloatingLabelSelect.SelectItem>
+        <FloatingLabelSelect.SelectItem value="ru">
+          {t("locales.ru")}
+        </FloatingLabelSelect.SelectItem>
       </FloatingLabelSelect.Content>
     </FloatingLabelSelect>
   );

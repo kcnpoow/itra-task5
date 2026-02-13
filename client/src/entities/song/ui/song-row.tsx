@@ -1,10 +1,10 @@
 import { flexRender, type Row } from "@tanstack/react-table";
 import { motion } from "motion/react";
+import clsx from "clsx";
 
+import { SongContent } from "./song-content";
 import type { Song } from "../model";
 import { TableCell, TableRow } from "@/shared/shadcn/components/ui/table";
-import clsx from "clsx";
-import { SongContent } from "./song-content";
 
 interface Props {
   row: Row<Song>;
@@ -48,7 +48,7 @@ export const SongRow = ({ row, open, onOpenChange }: Props) => {
             animate={{ height: open ? "auto" : 0 }}
           >
             <div className="px-12 py-4 bg-neutral-100">
-              <SongContent song={row.original} />
+              <SongContent song={row.original} open={open} />
             </div>
           </motion.div>
         </td>

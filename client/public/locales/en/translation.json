@@ -1,0 +1,18 @@
+{
+  "controls": {
+    "localeLabel": "Language",
+    "seedLabel": "Seed",
+    "likesLabel": "Likes"
+  },
+  "row": {
+    "titleLabel": "Song",
+    "artistLabel": "Artist",
+    "albumLabel": "Album",
+    "genreLabel": "Genre"
+  },
+  "enterSeedMessage": "Enter seed to begin",
+  "locales": {
+    "ru": "Russian",
+    "en": "English"
+  }
+}
