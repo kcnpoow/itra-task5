@@ -61,6 +61,10 @@ export const SongList = ({ locale, seed, likes }: Props) => {
     setOpenSongId(null);
   }, [data]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [locale, seed, likes]);
+
   return (
     <div>
       {isFetching ? (
